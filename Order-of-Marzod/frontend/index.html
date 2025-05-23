@@ -1,34 +1,39 @@
-<!-- filepath: c:\Users\danan\Desktop\Order-of-Marzod\frontend\index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Order of Marzod</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
 </head>
 <body>
-    <header>
-        <h1>Welcome to the Order of Marzod</h1>
-        <nav>
-            <ul>
-                <li><a href="about/about.html">About</a></li>
-                <li><a href="community/community.html">Community</a></li>
-                <li><a href="signup/signup.html">Sign Up</a></li>
-                <li><a href="signup/login.html">Login</a></li>
-                <li><a href="signup/admin-login.html">Admin Login</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section>
-            <h2>Home</h2>
-            <p>This is the main page of the Order of Marzod application.</p>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2023 Order of Marzod. All rights reserved.</p>
-    </footer>
+    <video autoplay muted loop id="background-video">
+        <source src="backend/static/background/city-alley-loop.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+    </video>
+    <div class="content-wrapper">
+        <header>
+            <h1>Welcome to the Order of Marzod</h1>
+            <nav>
+                <ul>
+                    <li><a href="about/about.html" class="neon-pink">About</a></li>
+                    <li><a href="community/community.html" class="neon-purple">Community</a></li>
+                    <li><a href="signup/signup.html" class="neon-red">Sign Up</a></li>
+                    <li><a href="signup/login.html" class="neon-pink">Login</a></li>
+                    <li><a href="signup/admin-login.html" class="neon-purple">Admin Login</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section>
+                <h2>Home</h2>
+                <p>This is the main page of the Order of Marzod application.</p>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2023 Order of Marzod. All rights reserved.</p>
+        </footer>
+    </div>
 </body>
 </html>

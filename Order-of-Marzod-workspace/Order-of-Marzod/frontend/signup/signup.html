@@ -1,2 +1,45 @@
-<!-- filepath: c:\Users\danan\Desktop\Order-of-Marzod\frontend\signup\signup.html -->
-<!-- Placeholder for signup/signup.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sign Up - Order of Marzod</title>
+    <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1 class="header-title">The Order of Marzod - Sign Up</h1>
+        </div>
+    </header>
+
+    <main>
+        <section class="signup-section">
+            <form id="signupForm" method="POST" action="/signup">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required />
+
+                <label for="displayname">Display Name:</label>
+                <input type="text" id="displayname" name="displayname" required />
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required />
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required />
+
+                <label for="newsletter">
+                    <input type="checkbox" id="newsletter" name="newsletter" value="yes" />
+                    Sign up for newsletter
+                </label>
+
+                <button type="submit">Create Account</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Order of Marzod. All rights reserved.</p>
+    </footer>
+</body>
+</html>

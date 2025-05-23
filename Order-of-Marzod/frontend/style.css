@@ -1,1 +1,108 @@
-/* Placeholder for style.css */
+/* Updated styling for Order of Marzod with video background and neon theme */
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Dancing Script', cursive;
+    color: #ccc;
+    background: black;
+    overflow-x: hidden;
+    position: relative;
+}
+
+#background-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1;
+    filter: grayscale(100%) contrast(1.2);
+    object-fit: cover;
+}
+
+.content-wrapper {
+    position: relative;
+    z-index: 1;
+    filter: grayscale(100%);
+    background: rgba(0,0,0,0.5);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header, footer {
+    background-color: rgba(0,0,0,0.7);
+    color: #ccc;
+    padding: 1rem;
+    text-shadow: 0 0 5px #000;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 1rem;
+}
+
+nav ul li a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #ff3399; /* neon pink */
+    text-shadow:
+        0 0 5px #ff3399,
+        0 0 10px #ff3399,
+        0 0 20px #ff3399;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #ccc;
+    text-shadow:
+        0 0 5px #ff3399,
+        0 0 10px #ff3399;
+}
+
+.neon-red {
+    color: #ff0033;
+    text-shadow:
+        0 0 5px #ff0033,
+        0 0 10px #ff0033,
+        0 0 20px #ff0033;
+}
+
+.neon-purple {
+    color: #cc00ff;
+    text-shadow:
+        0 0 5px #cc00ff,
+        0 0 10px #cc00ff,
+        0 0 20px #cc00ff;
+}
+
+.neon-pink {
+    color: #ff3399;
+    text-shadow:
+        0 0 5px #ff3399,
+        0 0 10px #ff3399,
+        0 0 20px #ff3399;
+}
+
+main {
+    padding: 1rem;
+    flex-grow: 1;
+}
+
+footer {
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}

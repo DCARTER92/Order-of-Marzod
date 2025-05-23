@@ -1,0 +1,20 @@
+The error from Render indicates that it is trying to run an npm build process but cannot find a package.json file in the frontend directory.
+
+This is because your frontend is a static site with plain HTML, CSS, and JavaScript files, and does not use npm or Node.js build tools.
+
+To fix this:
+
+1. When setting up your static site on Render, do NOT specify a build command that uses npm or expects a package.json.
+
+2. Leave the build command empty or blank.
+
+3. Set the root and publish directory to the frontend folder path, e.g.:
+   Order-of-Marzod/frontend
+
+4. Render will then serve your static files directly without trying to run npm.
+
+If you want to use npm or a frontend framework in the future, you can add a package.json and build scripts then.
+
+For now, configure Render to treat your frontend as a static site without a build step.
+
+Let me know if you want me to help you update your Render settings or provide a sample configuration.
