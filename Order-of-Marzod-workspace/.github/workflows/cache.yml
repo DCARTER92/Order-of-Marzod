@@ -1,0 +1,29 @@
+name: Cache SQLite Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Cache SQLite database
+      - name: Cache SQLite database
+        uses: actions/cache@v4.2.3
+        with:
+          path: backend/data/database.sqlite # Path to the SQLite database file
+          key: ${{ runner.os }}-sqlite-${{ hashFiles('backend/data/database.sqlite') }}
+          restore-keys: |
+            ${{ runner.os }}-sqlite-
+
+      # Step 3: Run a placeholder build step
+      - name: Placeholder Build Step
+        run: echo "Build or test steps go here"

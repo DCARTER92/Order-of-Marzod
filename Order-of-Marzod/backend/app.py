@@ -1,79 +1,93 @@
-from flask import Flask, render_template, send_from_directory, abort, request, jsonify
-import os
+from flask import Flask, render_template, request, redirect, url_for, jsonify
+import sqlite3
+import authentication
 from datetime import datetime
-import threading
 
-app = Flask(__name__, static_folder='../public', template_folder='../public')
+app = Flask(__name__)
 
-# In-memory storage for posts and comments
-posts = []
-posts_lock = threading.Lock()
-post_id_counter = 1
-comment_id_counter = 1
+DATABASE = 'backend/data/database.sqlite'
+
+def get_db_connection():
+    conn = sqlite3.connect(DATABASE)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+def init_db():
+    conn = get_db_connection()
+    conn.execute('''
+        CREATE TABLE IF NOT EXISTS posts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            content TEXT NOT NULL,
+            created_at TEXT NOT NULL
+        )
+    ''')
+    conn.execute('''
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            displayname TEXT NOT NULL UNIQUE,
+            email TEXT NOT NULL UNIQUE,
+            password TEXT NOT NULL,
+            newsletter INTEGER NOT NULL,
+            ip TEXT NOT NULL
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+@app.before_request
+def initialize():
+    init_db()
 
 @app.route('/')
 def home():
     return render_template('index.html')
 
-@app.route('/<path:filename>')
-def serve_page(filename):
-    public_path = os.path.join(app.root_path, '../public')
-    # Check if the requested file is an HTML file in the public folder or subfolders
-    if filename.endswith('.html'):
-        # Try to render as template
-        try:
-            return render_template(filename)
-        except:
-            abort(404)
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.form
+    username = data.get('username')
+    password = data.get('password')
+    ip = request.remote_addr
+    success, message = authentication.login_user(username, password, ip)
+    if success:
+        return jsonify({'status': 'success', 'message': message})
     else:
-        # Serve static files (css, js, images)
-        return send_from_directory(public_path, filename)
+        return jsonify({'status': 'error', 'message': message}), 401
 
-# API to submit a new post
-@app.route('/api/posts', methods=['POST'])
-def submit_post():
-    global post_id_counter
-    data = request.get_json()
-    content = data.get('content', '').strip()
-    if not content:
-        return jsonify({'error': 'Post content cannot be empty'}), 400
-    with posts_lock:
-        post = {
-            'id': post_id_counter,
-            'content': content,
-            'timestamp': datetime.utcnow().isoformat() + 'Z',
-            'comments': []
-        }
-        posts.insert(0, post)  # Insert at beginning for newest first
-        post_id_counter += 1
-    return jsonify(post), 201
+@app.route('/signup', methods=['POST'])
+def signup():
+    data = request.form
+    name = data.get('name')
+    displayname = data.get('displayname')
+    email = data.get('email')
+    password = data.get('password')
+    newsletter = data.get('newsletter') == 'yes'
+    ip = request.remote_addr
+    success, message = authentication.signup_user(name, displayname, email, password, newsletter, ip)
+    if success:
+        return redirect(url_for('home'))
+    else:
+        return jsonify({'status': 'error', 'message': message}), 400
 
-# API to get all posts with comments
-@app.route('/api/posts', methods=['GET'])
-def get_posts():
-    with posts_lock:
-        return jsonify(posts)
-
-# API to submit a comment to a post
-@app.route('/api/posts/<int:post_id>/comments', methods=['POST'])
-def submit_comment(post_id):
-    global comment_id_counter
-    data = request.get_json()
-    content = data.get('content', '').strip()
-    if not content:
-        return jsonify({'error': 'Comment content cannot be empty'}), 400
-    with posts_lock:
-        for post in posts:
-            if post['id'] == post_id:
-                comment = {
-                    'id': comment_id_counter,
-                    'content': content,
-                    'timestamp': datetime.utcnow().isoformat() + 'Z'
-                }
-                post['comments'].append(comment)
-                comment_id_counter += 1
-                return jsonify(comment), 201
-    return jsonify({'error': 'Post not found'}), 404
+@app.route('/api/posts', methods=['GET', 'POST'])
+def posts():
+    conn = get_db_connection()
+    if request.method == 'GET':
+        posts = conn.execute('SELECT * FROM posts ORDER BY created_at DESC').fetchall()
+        conn.close()
+        posts_list = [{'id': post['id'], 'content': post['content'], 'created_at': post['created_at']} for post in posts]
+        return jsonify(posts_list)
+    elif request.method == 'POST':
+        data = request.get_json()
+        content = data.get('content')
+        if not content:
+            return jsonify({'error': 'Content is required'}), 400
+        created_at = datetime.utcnow().isoformat()
+        conn.execute('INSERT INTO posts (content, created_at) VALUES (?, ?)', (content, created_at))
+        conn.commit()
+        conn.close()
+        return jsonify({'status': 'success', 'message': 'Post created'}), 201
 
 if __name__ == '__main__':
     app.run(debug=True)
