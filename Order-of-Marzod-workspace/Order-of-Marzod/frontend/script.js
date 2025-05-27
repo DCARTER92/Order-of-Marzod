@@ -1,84 +1,52 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const loginBtn = document.getElementById('loginBtn');
-    const loginPopup = document.getElementById('loginPopup');
-    const closePopup = document.getElementById('closePopup');
+// Fireflies animation initialization
+console.log("🔥 Fireflies animation initialized!");
 
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("✨ Fireflies are now animating!");
+
+  // Create login popup container
+  const loginPopup = document.createElement('div');
+  loginPopup.id = 'loginPopup';
+  loginPopup.style.display = 'none';
+  loginPopup.style.position = 'fixed';
+  loginPopup.style.top = '50%';
+  loginPopup.style.left = '50%';
+  loginPopup.style.transform = 'translate(-50%, -50%)';
+  loginPopup.style.backgroundColor = 'white';
+  loginPopup.style.padding = '20px';
+  loginPopup.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
+  loginPopup.style.zIndex = '1000';
+
+  loginPopup.innerHTML = `
+    <h2>Login</h2>
+    <form id="popupLoginForm" method="POST" action="/login">
+      <label for="popupDisplayname">Display Name:</label><br/>
+      <input type="text" id="popupDisplayname" name="displayname" required /><br/>
+      <label for="popupPassword">Password:</label><br/>
+      <input type="password" id="popupPassword" name="password" required /><br/><br/>
+      <button type="submit">Login</button>
+      <button type="button" id="closePopupBtn">Cancel</button>
+    </form>
+    <p>Don't have an account? <a href="signup/signup.html">Sign up here</a></p>
+  `;
+
+  document.body.appendChild(loginPopup);
+
+  // Show popup on login button click
+  const loginBtn = document.getElementById('loginBtn');
+  if (loginBtn) {
     loginBtn.addEventListener('click', () => {
-        loginPopup.classList.remove('hidden');
+      loginPopup.style.display = 'block';
     });
+  }
 
-    closePopup.addEventListener('click', () => {
-        loginPopup.classList.add('hidden');
+  // Close popup on cancel button click
+  const closePopupBtn = document.getElementById('closePopupBtn');
+  if (closePopupBtn) {
+    closePopupBtn.addEventListener('click', () => {
+      loginPopup.style.display = 'none';
     });
+  }
 
-    // Close popup if clicking outside the popup content
-    loginPopup.addEventListener('click', (e) => {
-        if (e.target === loginPopup) {
-            loginPopup.classList.add('hidden');
-        }
-    });
-
-    // Community post form handling
-    const postForm = document.getElementById('postForm');
-    const postsContainer = document.getElementById('postsContainer');
-
-    // Fetch posts from backend
-    async function fetchPosts() {
-        try {
-            const response = await fetch('/api/posts');
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            const data = await response.json();
-            posts = data;
-            renderPosts();
-        } catch (error) {
-            console.error('Error fetching posts:', error);
-            postsContainer.innerHTML = '<p>Failed to load posts.</p>';
-        }
-    }
-
-    // Render posts to the page
-    function renderPosts() {
-        postsContainer.innerHTML = '';
-        if (!posts || posts.length === 0) {
-            postsContainer.innerHTML = '<p>No posts yet. Be the first to post!</p>';
-            return;
-        }
-        posts.forEach(post => {
-            const postDiv = document.createElement('div');
-            postDiv.classList.add('post');
-            postDiv.textContent = post.content;
-            postsContainer.appendChild(postDiv);
-        });
-    }
-
-    // Handle new post submission
-    postForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const postContent = document.getElementById('postContent').value.trim();
-        if (!postContent) return;
-
-        try {
-            const response = await fetch('/api/posts', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ content: postContent })
-            });
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            const result = await response.json();
-            console.log(result.message);
-            postForm.reset();
-            fetchPosts();
-        } catch (error) {
-            console.error('Error posting:', error);
-        }
-    });
-
-    let posts = [];
-    fetchPosts();
+  // Optional: handle form submission via AJAX here if desired
 });
