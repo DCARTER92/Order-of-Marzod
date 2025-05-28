@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The Order of Marzod - A Mystical Brotherhood of Truth and Revelation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fireflies.css') }}" />
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/fireflies.js') }}" defer></script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1 class="header-title">The Order of Marzod - A Mystical Brotherhood of Truth and Revelation</h1>
+            <button id="loginBtn" class="login-btn">Login/Signup</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="intro-section">
+            <p>
+                Across the vast tapestry of human history, civilizations have worshiped gods—divine figures of power, wisdom, and creation. 
+                From Ather to Pangu, Ra to Baldur, and An to the countless others etched into myth and legend, they have guided the hearts 
+                and minds of generations. But what if they were all echoes of a singular truth?
+            </p>
+            <p>
+                Welcome to <strong>The Order of Marzod</strong>, an enigmatic community where ranks and roles signify <em>wisdom, leadership, 
+                and belonging</em>. Here, seekers of truth uncover the mysteries that have shaped the world's religions and mythologies.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Order of Marzod. All rights reserved.</p>
+    </footer>
+
+    <!-- Login Popup -->
+    <div id="loginPopup" class="popup-overlay hidden">
+        <div class="popup-content">
+            <span id="closePopup" class="close-btn">&times;</span>
+            <form id="loginForm" method="POST" action="/login">
+                <h3>Login</h3>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required />
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required />
+                <button type="submit">Login</button>
+            </form>
+            <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign up here</a></p>
+        </div>
+    </div>
+</body>
+</html>

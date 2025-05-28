@@ -1,7 +1,7 @@
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 
-DATABASE = 'backend/data/database.sqlite'
+DATABASE = 'data/database.sqlite'
 
 def get_db_connection():
     conn = sqlite3.connect(DATABASE)
