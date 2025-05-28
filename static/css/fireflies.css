@@ -1,0 +1,148 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  background: url(https://i.pinimg.com/originals/44/6e/3b/446e3b79395a287ca32f7977dd83b290.jpg);
+  background-size: cover;
+}
+
+.firefly {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 0.4vw;
+  height: 0.4vw;
+  animation: ease 200s alternate infinite;
+}
+
+.firefly::before,
+.firefly::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.firefly::before {
+  background: black;
+  opacity: 0.4;
+  animation: drift ease alternate infinite;
+}
+
+.firefly::after {
+  background: white;
+  opacity: 0;
+  box-shadow: 0 0 2vw 0.4vw yellow;
+  animation: drift ease alternate infinite, flash ease infinite;
+}
+
+/* Firefly animations for 15 fireflies */
+.firefly:nth-child(1) { animation: move1 18s ease alternate infinite; }
+.firefly:nth-child(2) { animation: move2 16s ease alternate infinite; }
+.firefly:nth-child(3) { animation: move3 20s ease alternate infinite; }
+.firefly:nth-child(4) { animation: move4 17s ease alternate infinite; }
+.firefly:nth-child(5) { animation: move5 19s ease alternate infinite; }
+.firefly:nth-child(6) { animation: move6 15s ease alternate infinite; }
+.firefly:nth-child(7) { animation: move7 21s ease alternate infinite; }
+.firefly:nth-child(8) { animation: move8 18s ease alternate infinite; }
+.firefly:nth-child(9) { animation: move9 16s ease alternate infinite; }
+.firefly:nth-child(10) { animation: move10 19s ease alternate infinite; }
+.firefly:nth-child(11) { animation: move11 17s ease alternate infinite; }
+.firefly:nth-child(12) { animation: move12 20s ease alternate infinite; }
+.firefly:nth-child(13) { animation: move13 15s ease alternate infinite; }
+.firefly:nth-child(14) { animation: move14 18s ease alternate infinite; }
+.firefly:nth-child(15) { animation: move15 16s ease alternate infinite; }
+
+@keyframes drift {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes flash {
+  0%, 30%, 100% {
+    opacity: 0;
+    box-shadow: 0 0 0vw 0vw yellow;
+  }
+  5% {
+    opacity: 1;
+    box-shadow: 0 0 2vw 0.4vw yellow;
+  }
+}
+
+/* Random movement patterns for each firefly */
+@keyframes move1 {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(100vw, -50vh); }
+}
+
+@keyframes move2 {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-50vw, 75vh); }
+}
+
+@keyframes move3 {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(75vw, 25vh); }
+}
+
+@keyframes move4 {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-25vw, -75vh); }
+}
+
+@keyframes move5 {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(50vw, 50vh); }
+}
+
+@keyframes move6 {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-75vw, -25vh); }
+}
+
+@keyframes move7 {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(25vw, 100vh); }
+}
+
+@keyframes move8 {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-100vw, -50vh); }
+}
+
+@keyframes move9 {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(50vw, -75vh); }
+}
+
+@keyframes move10 {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-75vw, 25vh); }
+}
+
+@keyframes move11 {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(25vw, -100vh); }
+}
+
+@keyframes move12 {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-50vw, -50vh); }
+}
+
+@keyframes move13 {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(75vw, 75vh); }
+}
+
+@keyframes move14 {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-25vw, -25vh); }
+}
+
+@keyframes move15 {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(100vw, 100vh); }
+}

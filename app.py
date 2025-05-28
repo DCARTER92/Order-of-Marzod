@@ -1,11 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 import sqlite3
-import authentication
+from backend import authentication
 from datetime import datetime
 
 app = Flask(__name__)
 
-DATABASE = 'backend/data/database.sqlite'
+DATABASE = 'data/database.sqlite'
 
 def get_db_connection():
     conn = sqlite3.connect(DATABASE)
@@ -55,8 +55,10 @@ def login():
     else:
         return jsonify({'status': 'error', 'message': message}), 401
 
-@app.route('/signup', methods=['POST'])
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
+    if request.method == 'GET':
+        return render_template('signup.html')
     data = request.form
     name = data.get('name')
     displayname = data.get('displayname')
